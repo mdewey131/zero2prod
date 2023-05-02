@@ -3,6 +3,22 @@ name = "zero2prod"
 version = "0.1.0"
 edition = "2021"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib] 
+# We could use anything here, but this follows the community convention
+# you could also specify a library name using the `name` field. But, when unspecified it just
+# uses the package.name above, which is what we want anyway
+path = "src/lib.rs"
+
+# Notice the [[]] here. This is an array in TOML syntax. We can only have one library in a project,
+# but we can have multiple binaries! If you want to manage multiple libraries in the same 
+# repo (hello monorepo) then you can look at the workspace feature -- more on that later. 
+[[bin]]
+path = "src/main.rs"
+name = "zero2prod"
 
 [dependencies]
+actix-web = "4"
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
+
+[target.x86_64-pc-windows-msvc]
+rustflags = ["-C", "link-arg=-fuse-ld=lld"]
