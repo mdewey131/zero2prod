@@ -28,3 +28,19 @@ reqwest = "0.11"
 
 [target.x86_64-pc-windows-msvc]
 rustflags = ["-C", "link-arg=-fuse-ld=lld"]
+
+# Because we're launching in WSL2 sometimes
+[target.x86_64-unknown-linux-gnu]
+rustflags = ["-C", "linker=clang", "-C", "link-arg=-fuse-ld=lld"]
+
+[dependencies.sqlx]
+version = "0.6"
+default-features = false
+features = [
+"runtime-tokio-rustls",
+"macros",
+"postgres",
+"uuid",
+"chrono",
+"migrate"
+]
