@@ -24,6 +24,19 @@ impl DatabaseSettings {
             self.database_name
         )
     }
+
+    /// Allows for connection to the Postgres instance instead of a specific DB
+    /// 
+    /// This is useful for testing, where one needs to create a DB on the fly for test isolation
+    pub fn connection_string_without_db(&self) -> String {
+        format!(
+            "postgres://{}:{}@{}:{}",
+            self.username,
+            self.password,
+            self.host,
+            self.port,
+        )
+    }
 }
 
 pub fn get_configuration() -> Result<Settings, config::ConfigError> {
