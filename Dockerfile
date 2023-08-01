@@ -10,8 +10,10 @@ RUN apt update && apt install lld clang -y
 # Copy all files from the working environment to the Docker image
 COPY . . 
 
+# Uses sqlx offline mode for query validation
+ENV SQLX_OFFLINE true
 # Build the binary using the release profile for SPEEEEED
 RUN cargo build --release
-
-# When `docker run` is executed, launc the binary
+ENV APP_ENVIRONMENT production
+# When `docker run` is executed, launch the binary
 ENTRYPOINT ["./target/release/zero2prod"]
