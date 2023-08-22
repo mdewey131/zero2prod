@@ -1,7 +1,7 @@
 # Using cargo-chef to help speed up build times
 FROM lukemathwalker/cargo-chef:latest-rust-1.65.0 as chef 
 WORKDIR /app 
-RUN apt update && install lld clang -y
+RUN apt update && install lld clang
 
 FROM chef AS planner
 COPY . .
@@ -24,11 +24,11 @@ RUN cargo build --release --bin zero2prod
 FROM debian:bullseye-slim AS runtime
 
 WORKDIR /app 
-# Install OpenSSL - it is dynaamically linked by some of our dependencies
+# Install OpenSSL - it is dynamically linked by some of our dependencies
 # Install ca-certificates - it is needed to verify TLS certificates
 # when establishing https connections
 RUN apt-get update -y \
-    && apt-get install --no-install-recommends openssl ca-certificates \ 
+    && apt-get install -y --no-install-recommends openssl ca-certificates \ 
     # clean up
     && apt-get autoremove -y \
     && apt-get clean -y \
