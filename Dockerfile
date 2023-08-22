@@ -28,7 +28,7 @@ WORKDIR /app
 # Install ca-certificates - it is needed to verify TLS certificates
 # when establishing https connections
 RUN apt-get update -y \
-    && apt-get install -y --no-install-recommends openssl ca-certificates \ 
+    && apt-get install --no-install-recommends openssl ca-certificates \ 
     # clean up
     && apt-get autoremove -y \
     && apt-get clean -y \
