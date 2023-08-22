@@ -1,7 +1,7 @@
 # Using cargo-chef to help speed up build times
 FROM lukemathwalker/cargo-chef:latest-rust-1.65.0 as chef 
 WORKDIR /app 
-RUN apt update && install lld clang
+RUN apt-get update && install lld clang
 
 FROM chef AS planner
 COPY . .
